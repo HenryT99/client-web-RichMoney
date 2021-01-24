@@ -25,7 +25,7 @@ export default {
       }
     );
 
-    if (response.data.code == 400)
+    if (response.data.code == 404)
       return payload.notify({
         title: "Thông báo",
         text: "Đăng nhật thất bại",
@@ -36,10 +36,21 @@ export default {
     Cookie.set("Token", response.headers.token);
     dispatch("login", payload);
   },
+
   async login({ commit, state, dispatch }, payload) {
     // If user is already logged in notify and exit
-    var result = await state.isUserLoggedIn(payload);
-    commit("UPDATE_AUTHENTICATED_USER", result.data.user);
+    var result = await state.getUserLoggedIn(payload);
+
+    if (result.data.code == 500)
+      return payload.notify({
+        title: "Thông báo",
+        text: "Có lỗi từ server",
+        iconPack: "feather",
+        icon: "icon-alert-triangle",
+        color: "danger"
+      });
+
+    commit("UPDATE_AUTHENTICATED_USER", result.data.data);
     payload.notify({
       title: "Thông báo",
       text: "Đăng nhật thành công",
@@ -50,55 +61,6 @@ export default {
     setTimeout(() => {
       return router.push(router.currentRoute.query.to || "/");
     }, 1000);
-
-    // if (await state.isUserLoggedIn(payload)) {
-
-    // }
-
-    // Try to sigin
-    // firebase
-    //   .auth()
-    //   .signInWithEmailAndPassword(
-    //     payload.userDetails.email,
-    //     payload.userDetails.password
-    //   )
-
-    //   .then(
-    //     result => {
-    //       // Set FLAG username update required for updating username
-    //       let isUsernameUpdateRequired = false;
-
-    //       // if username is provided and updateUsername FLAG is true
-    //       // set local username update FLAG to true
-    //       // try to update username
-    //       if (payload.updateUsername && payload.userDetails.username) {
-    //         isUsernameUpdateRequired = true;
-
-    //         dispatch("updateUsername", {
-    //           user: result.user,
-    //           username: payload.userDetails.username,
-    //           notify: payload.notify,
-    //           isReloadRequired: true
-    //         });
-    //       }
-
-    //       // if username update is not required
-    //       // just reload the page to get fresh data
-    //       // set new user data in localstorage
-    //       if (!isUsernameUpdateRequired) {
-    //       }
-    //     },
-    //     err => {
-    //       payload.notify({
-    //         time: 2500,
-    //         title: "Error",
-    //         text: err.message,
-    //         iconPack: "feather",
-    //         icon: "icon-alert-circle",
-    //         color: "danger"
-    //       });
-    //     }
-    //   );
   },
 
   // // Google Login

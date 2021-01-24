@@ -35,9 +35,14 @@
         >
           {{ user.status == 1 ? "Vô hiệu hóa" : "Kích hoạt" }}</vs-button
         >
-        <!-- <vs-button class="mt-4" type="border" color="#b9b9b9">{{
-          card_6.btn_right_text
-        }}</vs-button> -->
+        <vs-button
+          class="mt-4"
+          icon-pack="feather"
+          icon="icon-trash"
+          color="danger"
+          @click="deleteUser()"
+          >Xóa tài khoản</vs-button
+        >
       </div>
     </vx-card>
   </div>
@@ -79,6 +84,22 @@ export default {
           email: this.$props.user.email,
           notify: this.$vs.notify,
         });
+    },
+
+    async deleteUser() {
+      const isConfirmed = await this.$swal({
+        title: `Bạn có muốn xóa tài khoản ${this.$props.user.email}?`,
+        text: "Tài khoản này sẽ bị xóa và không thể khôi phục",
+        icon: "warning",
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Tôi xác nhận",
+        cancelButtonText: "Hủy!",
+      });
+      if (isConfirmed.isConfirmed == true) {
+        this.$store.dispatch("user/deleteUser", { email: this.$props.user.email });
+      }
     },
   },
 };

@@ -9,5 +9,11 @@ export default {
 
   UPDATE_USER_STATUS(state, obj) {
     state.detailedUser.status = obj;
+  },
+
+  UPDATE_ARRAY_USER(state, obj) {
+    state.userArray = state.userArray.filter(
+      element => element.email != obj.email
+    );
   }
 };

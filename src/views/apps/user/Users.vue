@@ -24,7 +24,7 @@
           {{ `${data[indextr].ho} ${data[indextr].ten}` }}
         </vs-td>
         <vs-td :data="data[indextr].role_name">
-          {{ `${data[indextr].title} ` }}
+          {{ `${data[indextr].role_name} ` }}
         </vs-td>
 
         <vs-td :data="data[indextr].status">
@@ -55,7 +55,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("user/getUserFromServer", { vue: this });
+    this.$store.dispatch("user/getUsersFromServer", { vue: this });
   },
   data: () => ({
     // users: [

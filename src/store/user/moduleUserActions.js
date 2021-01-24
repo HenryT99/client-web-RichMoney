@@ -1,14 +1,14 @@
 import Vue from "vue";
 
 export default {
-  async getUserFromServer({ commit }, payload) {
+  async getUsersFromServer({ commit }, payload) {
     const response = await await Vue.$http.get(
       `${window.location.protocol}//${window.location.hostname}:3000/api/users`,
       {
         withCredentials: true
       }
     );
-    commit("GET_USERS_FROM_SERVER", response.data.users);
+    commit("GET_USERS_FROM_SERVER", response.data.data);
   },
 
   async getUserByEmailFromServer({ commit }, payload) {
@@ -18,7 +18,8 @@ export default {
         withCredentials: true
       }
     );
-    commit("GET_USER_BY_EMAIL_FROM_SERVER", response.data.user);
+
+    commit("GET_USER_BY_EMAIL_FROM_SERVER", response.data.data);
   },
 
   async disableDetailedUser({ commit, state, dispatch }, payload) {
@@ -32,6 +33,7 @@ export default {
         withCredentials: true
       }
     );
+
     if (response.data.code == 200) {
       commit("UPDATE_USER_STATUS", 0);
       return payload.notify({
@@ -79,5 +81,18 @@ export default {
       icon: "icon-alert-triangle",
       color: "danger"
     });
+  },
+
+  async deleteUser({ commit, state, dispatch }, payload) {
+    const response = await Vue.$http.post(
+      `${window.location.protocol}//${window.location.hostname}:3000/api/users/delete`,
+      {
+        email: payload.email
+      },
+      {
+        withCredentials: true
+      }
+    );
+    if (response.data.code == 200) commit("UPDATE_ARRAY_USER", payload.email);
   }
 };

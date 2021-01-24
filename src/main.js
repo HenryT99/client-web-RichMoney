@@ -63,6 +63,10 @@ import "./filters/filters";
 import VueClipboard from "vue-clipboard2";
 Vue.use(VueClipboard);
 
+// Sweat Alert
+import VueSweetalert2 from "vue-sweetalert2";
+Vue.use(VueSweetalert2);
+
 // Tour
 import VueTour from "vue-tour";
 Vue.use(VueTour);
