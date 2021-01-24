@@ -18,9 +18,9 @@ export default {
         email: user.email,
         phoneNumber: user.phone_number,
         provideID: user.role_id,
-        role_name: user.role_name
+        role_name: user.title
       })
     );
-    localStorage.setItem("userRole", user.role_name);
+    localStorage.setItem("userRole", user.title);
   }
 };

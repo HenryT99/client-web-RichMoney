@@ -24,7 +24,7 @@
           {{ `${data[indextr].ho} ${data[indextr].ten}` }}
         </vs-td>
         <vs-td :data="data[indextr].role_name">
-          {{ `${data[indextr].role_name} ` }}
+          {{ `${data[indextr].title} ` }}
         </vs-td>
 
         <vs-td :data="data[indextr].status">

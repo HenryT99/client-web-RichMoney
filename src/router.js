@@ -18,16 +18,16 @@
 
 import Vue from "vue";
 import Router from "vue-router";
-import auth from "@/auth/authService";
+// import auth from "@/auth/authService";
 
-import firebase from "firebase/app";
-import "firebase/auth";
+// import firebase from "firebase/app";
+// import "firebase/auth";
 
 Vue.use(Router);
 
 const router = new Router({
   mode: "history",
-  base: process.env.BASE_URL,
+  base: "/",
   scrollBehavior() {
     return { x: 0, y: 0 };
   },
